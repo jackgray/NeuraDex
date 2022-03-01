@@ -41,12 +41,12 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Prisma example with Vercel</title>
+        <title>{constants.appName}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Prisma Vercel Deployment Example</h1>
+        <h1 className={styles.title}>{constants.appDesc}</h1>
 
         <div className={styles.grid}>
           <button onClick={onGetStatus} className={styles.apiButton}>
@@ -56,13 +56,13 @@ const Home: NextPage = () => {
             Seed data
           </button>
           <button onClick={onGetUsers} className={styles.apiButton}>
-            Load users with profiles
+            Load projects with profiles
           </button>
-          <button onClick={onGetPosts} className={styles.apiButton}>
-            Load posts
+          <button onClick={onGetSubjects} className={styles.apiButton}>
+            Load subjects
           </button>
           <div
-            className={`${styles.loader} ${isLoadingPost ? '' : styles.hidden}`}
+            className={`${styles.loader} ${isLoadingSubject ? '' : styles.hidden}`}
           ></div>
         </div>
         <pre
@@ -75,7 +75,7 @@ const Home: NextPage = () => {
       </main>
 
       <footer className={styles.footer}>
-        Powered by
+        Powered by Columbia University Medical Center + Mount Sinai School of Medicine
         <img
           src="/vercel.svg"
           alt="Vercel Logo"

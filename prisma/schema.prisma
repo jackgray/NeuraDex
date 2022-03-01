@@ -8,25 +8,73 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  post_id   Int     @id @default(autoincrement())
-  content   String?
-  title     String
-  author_id Int?
-  author    User?   @relation(fields: [author_id], references: [user_id])
+model Project {
+  project_desc    String    @unique
+  name            String?
+  modalities      String[]
+  id              Int       @id @default(autoincrement())
+  notes           Note[]
+  subjects        Subject[]
+  sessions        Session[]
+  members         User[]
+}
+
+model Note {
+  note_id         Int     @id @default(autoincrement())
+  content         String?
+  author_id       Int?
+  enteredBy       User?   @relation(fields: [author_id], references: [user_id])
 }
 
 model Profile {
-  bio        String?
-  profile_id Int     @id @default(autoincrement())
-  user_id    Int
-  user       User    @relation(fields: [user_id], references: [user_id])
+  bio             String?
+  id              Int     @id @default(autoincrement())
+  user_id         Int
+  user            User    @relation(fields: [user_id], references: [user_id])
 }
 
 model User {
-  email    String    @unique
-  name     String?
-  user_id  Int       @id @default(autoincrement())
-  posts    Post[]
-  profiles Profile[]
+  email           String    @unique
+  username        String    @unique
+  name            String?
+  id              Int       @id @default(autoincrement())
+  notes           Note[]
+  profiles        Profile[]
+  roles           Role[]    @default(USER)
+  studies         Study[]
+  sessions        Session[]
+  subjects        Subject[]
 }
+
+model Subject {
+  email           String    @unique
+  name            String?
+  id              Int       @id @default(autoincrement())
+  subject_id      String    @unique
+  dob             Int?
+  gender          String?
+  studies         Study[]
+  notes           Note[]
+  coordinators    User[]
+  sessions        Session[]
+}
+
+model Session {
+  session_id      String    @unique
+  name            String?
+  id              Int       @id @default(autoincrement())
+  notes           Note[]
+  profiles        Profile[]
+  subject         Subject   @relation(fields: [subject_id], references: [id])
+  subject_id      String
+  project         Project   @relation(fields: [project_desc], references: [project_desc])
+  project_desc    String  
+  modalities      Modality[]  @relation(fields: [modality_type], references: [type])
+  modality_type   String
+}
+
+model Modality {
+  id              Int       @id @default(autoincrement())
+  type            String 
+}
+

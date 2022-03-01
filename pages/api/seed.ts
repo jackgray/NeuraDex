@@ -28,8 +28,8 @@ const handler: NextApiHandler = async (req, res) => {
 
 const seedUsers: Prisma.UserCreateInput[] = [
   {
-    email: 'jane@prisma.io',
-    name: 'Jane',
+    email: 'jgrayau@gmail.com',
+    name: 'Jack',
     profiles: {
       create: [
         {
@@ -43,7 +43,7 @@ const seedUsers: Prisma.UserCreateInput[] = [
         },
       ],
     },
-    posts: {
+    notes: {
       create: [
         {
           title:
