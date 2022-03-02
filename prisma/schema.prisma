@@ -13,7 +13,7 @@ model Project {
   name            String?
   modalities      String[]
   id              Int       @id @default(autoincrement())
-  notes           Note[]
+  notes           Note[]                                            \\ relation: Note
   subjects        Subject[]
   sessions        Session[]
   members         User[]
@@ -24,6 +24,7 @@ model Note {
   content         String?
   author_id       Int?
   enteredBy       User?   @relation(fields: [author_id], references: [user_id])
+  session         Session?    @relation(fields: [session_id], references: [session_id])
 }
 
 model Profile {
