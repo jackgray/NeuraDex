@@ -6,7 +6,7 @@ const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'GET') {
     try {
       const subjects = await prisma.subject.findMany({
-        include: { profiles: true },
+        include: { sessions: true },
       })
 
       res.status(200).json(subjects)
