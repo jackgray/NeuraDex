@@ -9,3 +9,4 @@ Goals:
 - Ability to export pulled data to various formats
 - Automatically sync CSV files to database
 - Allow scientists to interact with familiar modes of data entry
+- Automatically link XNAT Rest-API URLs to database for seamless retrieval from XNAT
