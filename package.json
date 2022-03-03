@@ -3,7 +3,7 @@
   "description": "Schema for a blog built with Next.js",
   "license": "UNLICENSED",
   "dependencies": {
-    "@prisma/client": "3.4.2",
+    "@prisma/client": "^3.4.2",
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2"
