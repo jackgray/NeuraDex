@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["dataproxy"]
 }
 
@@ -9,80 +9,89 @@ datasource db {
 }
 
 model Study {
-  shortName       String      @unique
-  name            String?
-  modalities      String[]
-  id              Int         @id @default(autoincrement())
-  notes           Note[]
-  subjects        Subject[]
-  sessions        Session[]
-  members         User[]
+  shortName  String    @unique
+  name       String?
+  modalities String[]
+  id         Int       @id @default(autoincrement())
+  notes      Note[]
+  subjects   Subject[]
+  sessions   Session[]
+  members    User[]
 }
 
 model Note {
-  id              Int         @id @default(autoincrement())
-  content         String?
-  author_id       Int?
-  enteredBy       User?       @relation(fields: [authorName], references: [username])
-  authorName      String
-  session         Session?    @relation(fields: [session_id], references: [session_id])
-  session_id      String
+  id         Int      @id @default(autoincrement())
+  content    String?
+  author_id  Int?
+  enteredBy  User?    @relation(fields: [authorName], references: [username])
+  authorName String
+  session    Session? @relation(fields: [session_id], references: [session_id])
+  session_id String
+  Study      Study?   @relation(fields: [studyId], references: [id])
+  studyId    Int?
+  Subject    Subject? @relation(fields: [subjectId], references: [id])
+  subjectId  Int?
 }
 
 model Profile {
-  bio             String?
-  id              Int         @id @default(autoincrement())
-  user_id         Int
-  user            User        @relation(fields: [username], references: [username])
-  username        String
+  bio      String?
+  id       Int       @id @default(autoincrement())
+  user_id  Int
+  user     User      @relation(fields: [username], references: [username])
+  username String
+  sessions Session[]
 }
 
 model User {
-  email           String      @unique
-  username        String      @unique
-  name            String? 
-  id              Int         @id @default(autoincrement())
-  notes           Note[]  
-  profiles        Profile[] 
-  roles           Role[]    
-  studies         Study[]
-  sessions        Session[]
-  subjects        Subject[]
+  email    String    @unique
+  username String    @unique
+  name     String?
+  id       Int       @id @default(autoincrement())
+  notes    Note[]
+  profiles Profile[]
+  roles    Role[]
+  studies  Study[]
+  sessions Session[]
+  subjects Subject[]
 }
 
 model Subject {
-  email           String    @unique 
-  name            String?
-  id              Int       @id @default(autoincrement())
-  subject_id      String    @unique
-  dob             Int?
-  gender          String?
-  studies         Study[]
-  notes           Note[]
-  coordinators    User[]
-  sessions        Session[]
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  name         String?
+  subject_id   String    @unique
+  dob          Int?
+  gender       String?
+  studies      Study[]
+  notes        Note[]
+  coordinators User[]
+  sessions     Session[]
 }
 
 model Session {
-  session_id      String      @unique
-  name            String?
-  id              Int         @id @default(autoincrement())
-  notes           Note[]
-  profiles        Profile[]
-  subject         Subject     @relation(fields: [subject_id], references: [id])
-  subject_id      String
-  study           Study       @relation(fields: [studyName], references: [shortName])
-  studyName       String      
-  modalities      Modality[]  @relation(fields: [modality_type], references: [type])
-  modality_type   String
+  id         Int        @id @default(autoincrement())
+  session_id String     @unique
+  name       String?
+  notes      Note[]
+  profiles   Profile[]
+  subject    Subject    @relation(fields: [subject_id], references: [subject_id])
+  subject_id String
+  study      Study      @relation(fields: [studyName], references: [shortName])
+  studyName  String
+  modalities Modality[]
+  User       User?      @relation(fields: [userId], references: [id])
+  userId     Int?
 }
 
 model Modality {
-  id              Int         @id @default(autoincrement())
-  type            String 
+  id       Int       @id @default(autoincrement())
+  type     String
+  sessions Session[]
 }
 
 model Role {
-  id              Int         @id @default(autoincrement())
-  name            String
+  id     Int    @id @default(autoincrement())
+  name   String
+  User   User?  @relation(fields: [userId], references: [id])
+  userId Int?
 }

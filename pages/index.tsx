@@ -4,6 +4,9 @@ import { useState } from 'react'
 import styles from '../styles/Home.module.css'
 import Image from 'next/image'
 
+// Custom imports
+import constants from './constants'
+
 async function fetchApi(endpoint: string) {
   const response = await fetch(`/api/${endpoint}`)
   if (!response.ok) {
@@ -14,12 +17,12 @@ async function fetchApi(endpoint: string) {
 }
 
 const Home: NextPage = () => {
-  const [isLoadingPost, setLoadingPost] = useState(false)
+  const [isLoadingSubject, setLoadingSubject] = useState(false)
   const [apiResponse, setApiResponse] = useState(null)
   const [apiError, setApiError] = useState(null)
 
   const getApiCallback = (endpoint: string) => async () => {
-    setLoadingPost(true)
+    setLoadingSubject(true)
     setApiError(null)
 
     try {
@@ -30,13 +33,13 @@ const Home: NextPage = () => {
       setApiError(e)
     }
 
-    setLoadingPost(false)
+    setLoadingSubject(false)
   }
 
   const onGetStatus = getApiCallback('')
   const onSeed = getApiCallback('seed')
   const onGetUsers = getApiCallback('users')
-  const onGetPosts = getApiCallback('posts')
+  const onGetSubjects = getApiCallback('subjects')
 
   return (
     <div className={styles.container}>
